@@ -1,5 +1,9 @@
 package com.example.mavenTest;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,6 +41,25 @@ public class MainController {
 		ModelAndView mv = new ModelAndView("signin");
 		return mv;
 	}
+	
+	@PostMapping("/signin")
+	public ModelAndView signin( @RequestParam Map<String, String> param , HttpSession session ) {
+		
+		ModelAndView mv = new ModelAndView("index");
+		System.out.println(param.get("email"));
+		String name = memberService.login(param);
+		//mv.addObject("user", name);
+		
+		if(name != null) {
+			session.setAttribute("user", name);
+		}else {
+			mv.setViewName("signin");
+			mv.addObject("fail", "a");
+		}
+			
+		return mv;
+	}
+	
 	
 	@PostMapping("/signup/Enroll")
 	public ModelAndView signEnroll( @ModelAttribute memberDTO memberdto ) {

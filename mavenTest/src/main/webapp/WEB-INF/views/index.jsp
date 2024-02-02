@@ -7,6 +7,7 @@
 <title>메이븐 테스트</title>
 </head>
 <body>
+	<h1>${user }</h1>
 	<a href="/signup" id="up">회원가입</a>
 	<a href="/signin" id="in">로그인</a>
 </body>
@@ -28,8 +29,6 @@
 		background:#3498db;
 	}
 	#in{background:#27ae60;}
-
-
 
 
 </style>
