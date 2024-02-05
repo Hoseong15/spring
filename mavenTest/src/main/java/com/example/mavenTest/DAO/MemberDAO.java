@@ -32,4 +32,11 @@ public class MemberDAO {
 								 memberdto.getName(), memberdto.getTel() );
 	}
 	
+	public void update(String email, String pw, String name, String tel, String rpw) {
+		
+		String sql="update member set name=?, tel=?, pw=? where email=? and pw=?";
+		
+		jdbcTemplate.update(sql, name,tel,rpw,email,pw);
+	}
+	
 }

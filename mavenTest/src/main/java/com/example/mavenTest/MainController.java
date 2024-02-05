@@ -60,6 +60,17 @@ public class MainController {
 		return mv;
 	}
 	
+	@GetMapping("/update")
+	public ModelAndView update() {
+		ModelAndView mv = new ModelAndView("update");
+		return mv;
+	}
+	@PostMapping("/update")
+	public ModelAndView update(@RequestParam Map<String, String> pm) {
+		ModelAndView mv = new ModelAndView("signin");
+		memberService.update(pm);
+		return mv;
+	}
 	
 	@PostMapping("/signup/Enroll")
 	public ModelAndView signEnroll( @ModelAttribute memberDTO memberdto ) {
