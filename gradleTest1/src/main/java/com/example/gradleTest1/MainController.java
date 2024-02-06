@@ -5,9 +5,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.example.gradleTest1.DTO.person;
 
 @Controller
 public class MainController {
@@ -54,9 +57,15 @@ public class MainController {
 	}
 	
 	@GetMapping("/input3")
-	public String input() {
-		
+	public String input(person person, Model model) {
+
 		return "input3";
+	}
+	
+	@GetMapping("/input4/{id}/{name}")
+	public String input4(@PathVariable String id, @PathVariable String name, Model model ) {
+		
+		return "input4";
 	}
 	
 }

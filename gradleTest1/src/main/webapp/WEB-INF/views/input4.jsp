@@ -7,9 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	<h2>input4 page</h2>
+
+	${id }<br> ${name }
 	
-	<h2>input3 page</h2>
-	${person.myId }<br>${person.myName }
+	
+	
 	
 </body>
 </html>
