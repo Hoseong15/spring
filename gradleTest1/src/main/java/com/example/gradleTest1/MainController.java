@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.gradleTest1.DTO.MyInfoDTO;
 import com.example.gradleTest1.DTO.person;
 
 @Controller
@@ -68,6 +69,42 @@ public class MainController {
 		return "input4";
 	}
 	
+	@GetMapping("/testIn")
+	public String test() {
+		
+		return "testinput";
+	}
+	
+	
+	@GetMapping("/Info")
+	public String test1(MyInfoDTO myInfoDTO, Model model) {
+		
+		String ageTmp = myInfoDTO.getAge();
+		if(ageTmp.length() == 1) {
+			ageTmp = "10살미만";
+		} else {
+			ageTmp = ageTmp.substring(0,1)+"0대";
+		}
+		
+		model.addAttribute("age",ageTmp );
+		
+		
+		return "myInfo";
+	}
+
+//	@GetMapping("/Info")
+//	public String test1(HttpServletRequest request, Model model) {
+//		String id1 = request.getParameter("id1");
+//		String age = request.getParameter("age");
+//		String job = request.getParameter("job");
+//		age = age.substring(0,1)+"0대";
+//		
+//		model.addAttribute("id1",id1);
+//		model.addAttribute("age",age);
+//		model.addAttribute("job",job);
+//		return "myInfo";
+//	}
+	
 }
 
 
@@ -81,4 +118,91 @@ public class MainController {
   	사용자 요청에 의한 전달받은 데이터를 다시 사용자 화면에 제공하는 방법은 model 사용해야한다.
   	사용자의 요청에 의한 발생된 데이터는 파라미터로 돌어오는데 파라미터는 데이터가 변경되면 사라진다.
   	파라미터가 사라지기전에 모델에 저장해두어야한다.
+  	
+  	네이밍규칙(권고사항 ? - 반드시 하지않아도 되지만 대체적으로 이렇게쓴다)
+  	
+  	공통부분
+  		1. 대소문자 구분
+  		2. 예약어 사용하면안됨( 예) int,String)
+  		3. 숫자로 시작하면 안됨
+  		4. 특수문자는 _또는 $만 허용
+  		5. 파스칼 표기법 또는 카멜 표기법사용
+  			카멜 - myName , 파스칼 - MyName
+  		6. 반의어는 반드시 대응하는 개념으로 사용
+  		
+  	프로젝트 이름
+  		- 대소문자 구분없이 사용가능 하지만 대문자 사용을 권장
+  	
+  	패키지 이름
+  		- 대소문자 모두 사용가능 하지만 클래스명과 구분을 위해 소문자 사용 권장
+  		- 가급적 한단어 사용 권장
+  		  com.naver.comic.member 올바른 예
+  		  com.naver.comicMemer   안좋은 예
+  	
+  	클래스
+  		- 파스칼표기법 사용
+  		- 명사로 시작
+  		
+  	메서드
+  		- 카멜표기법 사용
+  		- 동사로 시작
+  		메서드명의 접두사(일반적)
+  		 속성에 접근 : get/set
+  		 데이터
+  		 	생성 : create
+  		 	조회 : find
+  		 	변경 : update/modify
+  		 	삭제 : delete
+  		 	입력 : input/insert
+  		 	초기화 : init
+  			파일불러오기 : load
+  			파일저장 : save
+  			유뮤확인 : has
+  			A를 기준으로 B를 : By
+  				getAgeByBirth()
+  				getElementById()
+  			
+  	변수 - 카멜 표기법
+  	상수 - 전부 대문자, 스네이크 표기법	
+  	
+  	신입 개발자들이 자주하는 나쁜습관?
+  	 1. 임의적인 postfix사용
+  	 	 - 학교나 학워또는 독학할때 다룬 주소네이밍을 사용한다.(.do)
+  	 2. 확인을 위해 System.out.println을 사용한다.
+  	 	 - 테스트나 공부의 목적으로 빠르게 확인하기 위해 사용하지만 
+  	 	  실제 서비스에서는 console로 출력하거나 로그기록이 남도록 파일 저장을해야한다
+  	 3. 코드에 주석처리하고 왜 주석을 했는가 아무말도 남기지 않는다.
+  	 	 - 주석처리를 했다면 다른사람이 보거나 나중에 내가 다시 볼때 왜 주석을 했는지 이유가 있어야
+  	 	  알아볼 수 있다. 아무 기록도 안하고 주석할꺼면 그냥 삭제하기
+  	 4. 변수 이름에 _ 넣는다.
+  	  	 - 변수는 카멜표기법으로 작성한다.
+  	  	 - 대부분의 개발자들이 카멜표기법으로 작성하는데 나혼자 _ 넣거나 다른 방식으로 작성하면
+  	  	   따돌림 당한다.
+  	 5. 메서드 이름에서 형용사나 명사를 앞쪽에 넣는다.
+  	  	 - newUser , anyData  -> 이렇게 하면 안된다.
+  	  	 - createUser, saveMemberData
+  	 6. 필요 이상으로 if문 많이 활용
+  	  	 -  if문으로 최소화 하는게 좋다.(map을 활용하든가, switch문이나, callback, 재귀등등)
+  	  	 
+  	 7. parameter가 많은데 그냥 변수로 받는다.
+  	     - form 입력 데이터가 10가지인데 @RequestParam으로 하나하나 다 받는다.
+  	     - 파라미터가 많은 경우 객체로 받는게 좋다.
+  	 8. 불필요한 로그를 넣는다.
+  	     - 코드가 잘 동작하는지 테스트를 위해 System.out.println을 사용하는데
+  	     - 테스트가 끝났으면 삭제하도록하기! 또는 주석달기!
+  	 9. 라이브러리를 활용하지 않는다.
+  	     - 데이터 저장을 위해 클래스를 정의하는데 직접 get/set/toString을 작성한다.
+  	     - 객체에 데이터를 하나하나 직접 저장 시킨다.
+  	     - 라이브러리를 사용하면 쉽게 빠르게 작업이 가능한데 어려운 길을 간다.
+  	 10. 가능한 적은 코드로 작성하지 않으려 한다.
+  	 11. 사용자 편의성을 고려하지않는다.
+  	      -              	
+  		
+  		
+  		
+  		
+  		
+  	
+  	
+  	
  */
