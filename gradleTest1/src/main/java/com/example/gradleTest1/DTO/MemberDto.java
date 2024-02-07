@@ -24,9 +24,10 @@ public class MemberDto {
 	@Size(min = 6, message="최소 6자리 이상 입력하세요")
 	private String password;
 	
-	@NotEmpty(message="city is required")
+	@NotEmpty(message="도시를 입력하세요")
 	private String city;
 	
+	@NotEmpty(message="주소를 입력하세요")
 	private String state;
 	
 	@Digits(integer=5, fraction=0, message="우편번호 자릿수가 올바르지않습니다.")
